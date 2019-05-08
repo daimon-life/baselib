@@ -61,7 +61,7 @@ std::string GetExecutePath()
 
 
 //
-std::string GetGetExecuteDir()
+std::string GetExecuteDir()
 {
     std::string szRet = GetExecutePath();
     
@@ -74,7 +74,7 @@ std::string GetGetExecuteDir()
     return szRet;
 }
 
-std::string GetGetExecuteName()
+std::string GetExecuteName()
 {
     std::string szRet = GetExecutePath();
     
