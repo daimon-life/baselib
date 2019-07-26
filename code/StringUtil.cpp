@@ -157,6 +157,12 @@ std::string  CStringUtil::WCharToUTF8(const std::wstring& wszSrc)
  5 | 0020 0000 - 03FF FFFF |          111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
  6 | 0400 0000 - 7FFF FFFF | 1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
 // #txt---end
+// # eg---
+   0x00006211 - 我
+   | 0000 0800 - 0000 FFFF |                            1110xxxx 10xxxxxx 10xxxxxx
+   | 01100010 00010001     |                            11100110 10001000 10010001
+   | 11 62 00 00           |                                  e6       88       91
+// # eg---end
 */
 uint32_t UTF8ToUnicode_LittleEndian(const char* pUtf8, wchar_t* pUnicode) {
 	assert(pUtf8 != nullptr);
