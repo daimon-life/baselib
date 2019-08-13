@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3.2)
-project(TestCpp VERSION 1.0.0.0 LANGUAGES C C++)
+project(baselib VERSION 1.0.0.0)
 
 
 # ---> targets of package base test 
@@ -137,4 +137,3 @@ foreach(package ${PACKAGE_LIST})
         message(AUTHOR_WARNING "No ${package}.cmake found in ${PROJECT_SOURCE_DIR}/package")
     endif()
 endforeach()
-
