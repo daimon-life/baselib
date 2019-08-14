@@ -2,6 +2,14 @@ cmake_minimum_required(VERSION 3.3.2)
 project(baselib VERSION 1.0.0.0)
 
 
+# ---> generate configure files 
+# // configure version file
+configure_file (
+  "${PROJECT_BINARY_DIR}/version.h.in"
+  "${PROJECT_SOURCE_DIR}/include/version.h"
+)
+
+
 # ---> targets of package base test 
 # // package targets
 set(PACKAGE_LIST
