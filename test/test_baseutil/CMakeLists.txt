@@ -13,6 +13,15 @@ set(DEP_TARGET_LIST
     baseutil
 )
 
+set(WIN_RC_LIST
+    resource.h
+    test_baseutil.rc
+)
+
+if(CMAKE_HOST_WIN32)
+  list(APPEND CPP_LIST ${WIN_RC_LIST})
+endif()
+
 include_directories(${PROJECT_OUTPUT_INCLUDE_DIR})
 foreach(dep_target ${DEP_TARGET_LIST})
   include_directories(${PROJECT_OUTPUT_INCLUDE_DIR}/${dep_target})
