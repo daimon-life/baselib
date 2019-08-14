@@ -7,11 +7,13 @@ endif()
 
 set(CPP_LIST
     PathUtil.cpp
-    ClipboardUtil.h
     ClipboardUtil.cpp
-    StringUtil.h
     StringUtil.cpp
+    DylibUtil.cpp
 )
+
+include_directories(${PROJECT_OUTPUT_INCLUDE_DIR})
+include_directories(${PROJECT_OUTPUT_INCLUDE_DIR}/${TARGET})
 
 # add target
 add_library(${TARGET} STATIC ${CPP_LIST})
