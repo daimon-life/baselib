@@ -106,7 +106,7 @@ endif()
 
 
 # ---> load modules
-# // open folder filter
+# // load source module
 SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
 foreach(base ${BASE_LIST})
     set(subdirectory code/${base})
@@ -119,6 +119,7 @@ foreach(base ${BASE_LIST})
     unset(subdirectory)
     unset(TARGET_NAME)
 endforeach()
+# // load test module
 foreach(test ${TEST_LIST})
     set(subdirectory test/${test})
     if(EXISTS ${PROJECT_SOURCE_DIR}/${subdirectory}/CMakeLists.txt)
