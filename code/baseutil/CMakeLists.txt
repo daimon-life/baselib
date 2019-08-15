@@ -6,10 +6,12 @@ endif()
 
 
 set(CPP_LIST
+    RetDefine.h
     PathUtil.cpp
     ClipboardUtil.cpp
     StringUtil.cpp
     DylibUtil.cpp
+    BaseLog.cpp
 )
 
 include_directories(${PROJECT_OUTPUT_INCLUDE_DIR})
