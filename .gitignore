@@ -32,4 +32,10 @@
 *.app
 
 # System files
-*/.DS_Store
+.DS_Store
+
+# Visual studio files
+*.user
+*.sdf
+*.opensdf
+*.v12.suo
