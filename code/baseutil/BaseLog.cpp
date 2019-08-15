@@ -63,10 +63,12 @@ CBaseLog::~CBaseLog()
 		m_cFileStm.close();
     }
 	m_cFileStm.clear();
+#if defined(WIN32) || defined(WIN64)
 	if (m_bPrintf)
 	{
 		FreeConsole();
 	}
+#endif
 }
 
 uint32_t CBaseLog::LogInit(const char* pFile, bool bPrintf)
@@ -89,11 +91,12 @@ uint32_t CBaseLog::LogInit(const char* pFile, bool bPrintf)
 	{
 		return emRC_FILE_OPEN_ERR;
 	}
+#if defined(WIN32) || defined(WIN64)
 	if (m_bPrintf)
 	{
 		::AllocConsole();
 	}
-
+#endif
     return emRC_OK;
 }
 
@@ -179,7 +182,6 @@ void CBaseLog::WriteLog(int iLogLevel, const char* pSrcFile, const char* pFunc, 
     }
     m_iLogLine++;
 
-    DWORD dwRet = 0;
     char szDebugInfo[2048] = { 0 };
     char aNowTime[LOG_MAX_TIME_SIZE] = { 0 };
     char acSrcFile[256] = { 0 };
@@ -208,6 +210,7 @@ void CBaseLog::WriteLog(int iLogLevel, const char* pSrcFile, const char* pFunc, 
     #ifdef WIN32
     if (m_bPrintf)
     {
+        DWORD dwRet = 0;
         ::OutputDebugStringA(szDebugInfo);
         ::WriteConsoleA(GetStdHandle(STD_OUTPUT_HANDLE), szDebugInfo, strlen(szDebugInfo), &dwRet, NULL);
     }
@@ -216,8 +219,8 @@ void CBaseLog::WriteLog(int iLogLevel, const char* pSrcFile, const char* pFunc, 
     {
         printf(LOG_OUTPUT_STRING, aNowTime, g_MeetLogLevel[iLogLevel], pFunc, m_pComment, pSrcName, nLine);
     }
-    fprintf(m_fLog, LOG_OUTPUT_STRING, aNowTime, g_MeetLogLevel[iLogLevel], pFunc, m_pComment, pSrcName, nLine);
-    fflush(m_fLog);
+    //fprintf(m_fLog, LOG_OUTPUT_STRING, aNowTime, g_MeetLogLevel[iLogLevel], pFunc, m_pComment, pSrcName, nLine);
+    //fflush(m_fLog);
     #endif // WIN32
 	// 写到日志文件中
 	m_cFileStm << szDebugInfo;

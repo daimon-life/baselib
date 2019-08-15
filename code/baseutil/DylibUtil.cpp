@@ -76,6 +76,7 @@ void* CDylibUtil::ReadDylib(void* hDylib, const char* pszSymbol)
 	return pFunc;
 }
 
+#if defined(WIN32) || defined(WIN64)
 std::string GetLastErrorString()
 {
 	std::string szRet;
@@ -89,3 +90,9 @@ std::string GetLastErrorString()
 
 	return szRet;
 }
+#else
+std::string GetLastErrorString()
+{
+    return std::string("");
+}
+#endif

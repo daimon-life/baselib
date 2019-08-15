@@ -106,7 +106,7 @@ std::string  CStringUtil::WCharToChar(const wchar_t *pwszSrc)
 	}
 	SAFE_FREE(pChar);
 #else
-	wszRet = WCharToUTF8(pszSrc);
+	szRet = WCharToUTF8(pwszSrc);
 #endif
 
 	return szRet;

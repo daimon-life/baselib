@@ -39,3 +39,12 @@
 *.sdf
 *.opensdf
 *.v12.suo
+
+# target and build directory
+target/*
+build/*
+!build/*.md
+!build/*.in
+
+# include directory
+include/version.h
