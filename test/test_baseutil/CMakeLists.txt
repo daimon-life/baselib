@@ -6,6 +6,8 @@ endif()
 
 
 set(CPP_LIST
+    test_main.cpp
+    test_baselog.cpp
     test_dylibutil.cpp
 )
 
@@ -35,3 +37,4 @@ add_dependencies(${TARGET} ${DEP_TARGET_LIST})
 target_link_libraries(${TARGET} ${DEP_TARGET_LIST})
 
 SET_PROPERTY(TARGET ${TARGET} PROPERTY FOLDER "test")
+
