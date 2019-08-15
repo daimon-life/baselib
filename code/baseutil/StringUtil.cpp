@@ -164,6 +164,7 @@ std::string  CStringUtil::WCharToUTF8(const std::wstring& wszSrc)
    | 11 62 00 00           |                                  e6       88       91
 // # eg---end
 */
+
 uint32_t UTF8ToUnicode_LittleEndian(const char* pUtf8, wchar_t* pUnicode) {
 	assert(pUtf8 != nullptr);
 
@@ -303,7 +304,7 @@ uint32_t UnicodeToUTF8_LittleEndian(const wchar_t* pUnicode, char* pUtf8) {
 		}
 		else if (wch < 0x4000000) {
 			if (pUtf8) {
-				pUtf8[uLen++] = 0xf0 | (wch >> 24);
+				pUtf8[uLen++] = 0xf8 | (wch >> 24);
 				pUtf8[uLen++] = 0x80 | ((wch >> 18) & 0x3f);
 				pUtf8[uLen++] = 0x80 | ((wch >> 12) & 0x3f);
 				pUtf8[uLen++] = 0x80 | ((wch >> 6) & 0x3f);
@@ -315,7 +316,7 @@ uint32_t UnicodeToUTF8_LittleEndian(const wchar_t* pUnicode, char* pUtf8) {
 		}
 		else if (wch < 0x80000000) {
 			if (pUtf8) {
-				pUtf8[uLen++] = 0xf0 | (wch >> 32);
+				pUtf8[uLen++] = 0xfc | (wch >> 30);
 				pUtf8[uLen++] = 0x80 | ((wch >> 24) & 0x3f);
 				pUtf8[uLen++] = 0x80 | ((wch >> 18) & 0x3f);
 				pUtf8[uLen++] = 0x80 | ((wch >> 12) & 0x3f);
