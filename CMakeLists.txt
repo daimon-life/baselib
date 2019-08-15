@@ -38,6 +38,9 @@ endif()
 
 # ---> set cmake project
 # // configure
+if(CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_CONFIGURATION_TYPES Debug Release)
+endif()
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release CACHE STRING "CMake build type" FORCE)
 endif()
@@ -110,6 +113,13 @@ if(CMAKE_HOST_APPLE)
   set(CMAKE_XCODE_ATTRIBUTE_DEBUG_INFORMATION_FORMAT "dwarf-with-dsym")
 elseif(CMAKE_HOST_UNIX AND CMAKE_BUILD_TYPE STREQUAL Debug)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+endif()
+
+# // compile settings
+if(MSVC)
+  add_definitions(/wd4819 /source-charset:utf-8)
+else()
+  #add_definitions(-Wall -fvisibility=hidden)
 endif()
 
 
