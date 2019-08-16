@@ -36,5 +36,12 @@ add_executable(${TARGET} ${CPP_LIST})
 add_dependencies(${TARGET} ${DEP_TARGET_LIST})
 target_link_libraries(${TARGET} ${DEP_TARGET_LIST})
 
+# target version
+#target_compile_definitions(${LIBRARY} PRIVATE INITLIB_EXPORTS)
+set_target_properties(${LIBRARY} PROPERTIES 
+                      DEFINE_SYMBOL "${TARGET_NAME}_EXPORTS"
+                      VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+                      SOVERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
+
 SET_PROPERTY(TARGET ${TARGET} PROPERTY FOLDER "test")
 
