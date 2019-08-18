@@ -17,7 +17,7 @@
 
 /********************************** 宏、常量 **********************************/
 
-#define LOG_OUTPUT_STRING			"%s-%5s- [%s]:  %s - [%s(%d)]\n"
+#define LOG_OUTPUT_FORMAT			"%s-%5s- [%s]:  %s - [%s(%d)]\n"
 #define	LOG_MAX_NUM					100000
 #define	LOG_MAX_SIZE 				10240
 #define LOG_MAX_TIME_SIZE			24
@@ -200,28 +200,23 @@ void CBaseLog::WriteLog(int iLogLevel, const char* pSrcFile, const char* pFunc, 
     GetFmtTimeString(aNowTime);
     if (strlen(m_pComment) > 1900)
     {
-        sprintf(szDebugInfo, LOG_OUTPUT_STRING, aNowTime, g_MeetLogLevel[iLogLevel], pFunc, "Log Info Length Over Size.", pSrcName, nLine);
+		sprintf(szDebugInfo, LOG_OUTPUT_FORMAT, aNowTime, g_MeetLogLevel[iLogLevel], pFunc, "Log Info Length Over Size.", pSrcName, nLine);
     }
     else
     {
-        sprintf(szDebugInfo, LOG_OUTPUT_STRING, aNowTime, g_MeetLogLevel[iLogLevel], pFunc, m_pComment, pSrcName, nLine);
+		sprintf(szDebugInfo, LOG_OUTPUT_FORMAT, aNowTime, g_MeetLogLevel[iLogLevel], pFunc, m_pComment, pSrcName, nLine);
     }
 	// 输出到控制台
-    #ifdef WIN32
     if (m_bPrintf)
     {
+#if defined(WIN32) || defined(WIN64)
         DWORD dwRet = 0;
         ::OutputDebugStringA(szDebugInfo);
         ::WriteConsoleA(GetStdHandle(STD_OUTPUT_HANDLE), szDebugInfo, strlen(szDebugInfo), &dwRet, NULL);
+#else
+		printf(szDebugInfo);
+#endif
     }
-    #else
-    if (m_bPrintf)
-    {
-        printf(LOG_OUTPUT_STRING, aNowTime, g_MeetLogLevel[iLogLevel], pFunc, m_pComment, pSrcName, nLine);
-    }
-    //fprintf(m_fLog, LOG_OUTPUT_STRING, aNowTime, g_MeetLogLevel[iLogLevel], pFunc, m_pComment, pSrcName, nLine);
-    //fflush(m_fLog);
-    #endif // WIN32
 	// 写到日志文件中
 	m_cFileStm << szDebugInfo;
 }
