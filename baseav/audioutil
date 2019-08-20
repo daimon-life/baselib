@@ -1,0 +1,33 @@
+// 取值在 0 ~ 20log(32767)
+static double AudioGetDecibel(short* lpData, int nSampleNum, double & dbLeft, double & dbRight) 
+{
+	if (nSampleNum <= 0) {
+		dbLeft = 0.0;
+		dbRight = 0.0;
+
+		return 0.0;
+	}
+	for (int k = 0; k < nSampleNum; k++) {
+		int nleft = lpData[0];
+		int nRight = lpData[1];
+
+		dbLeft += (int)abs((int)nleft);
+		dbRight += (int)abs((int)nRight);
+		lpData = lpData + 2;
+	}
+	if (dbLeft) {
+		double temp = dbLeft / nSampleNum;
+		temp = temp < 1 ? 1 : temp;
+
+		dbLeft = AUDIO_DB(temp);
+	}
+
+	if (dbRight) {
+		double temp = dbRight / nSampleNum;
+		temp = temp < 1 ? 1 : temp;
+
+		dbRight = AUDIO_DB(temp);
+	}
+
+	return (dbLeft + dbRight) / 2;
+}
