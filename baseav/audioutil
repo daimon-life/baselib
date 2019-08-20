@@ -1,3 +1,6 @@
+
+#define AUDIO_DB(vol_nornalized) (20 * log10(vol_nornalized) )
+
 // 取值在 0 ~ 20log(32767)
 static double AudioGetDecibel(short* lpData, int nSampleNum, double & dbLeft, double & dbRight) 
 {
