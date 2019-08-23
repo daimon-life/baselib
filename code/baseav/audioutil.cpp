@@ -1,3 +1,5 @@
+#include <cmath>
+#include <cstdlib>
 
 #define AUDIO_DB(vol_nornalized) (20 * log10(vol_nornalized) )
 
@@ -40,7 +42,7 @@ static double AudioGetDecibel(short* lpData, int nSampleNum, double & dbLeft, do
 }
 
 // 混音
-static void MixAudioS16(BYTE* pSrcData, BYTE* pSubData, int nBytes)
+static void MixAudioS16(char* pSrcData, char* pSubData, int nBytes)
 {
     short *data1 = (short*)pSrcData;
     short *data2 = (short*)pSubData;

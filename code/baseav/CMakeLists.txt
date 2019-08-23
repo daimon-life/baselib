@@ -2,29 +2,17 @@
 if(DEFINED TARGET_NAME)
   set(TARGET ${TARGET_NAME})
 else()
-  set(TARGET baseutil)
+  set(TARGET baseav)
 endif()
 
 
 # extern header files
 set(INC_LIST
-    PathUtil.h
-    ClipboardUtil.h
-    StringUtil.h
-    DylibUtil.h
-    BaseLog.h
-    BaseLogSimple.h
 )
 
 # source cpp files for target
 set(CPP_LIST
-    RetDefine.h
-    PathUtil.cpp
-    ClipboardUtil.cpp
-    StringUtil.cpp
-    DylibUtil.cpp
-    BaseLog.cpp
-    BaseLogSimple.cpp
+    audioutil.cpp
 )
 
 # group for this target files

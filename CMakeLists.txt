@@ -19,6 +19,7 @@ set(PACKAGE_LIST
 # // base targets
 set(BASE_LIST
     baseutil
+    baseav
 )
 
 # // test targets
