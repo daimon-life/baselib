@@ -142,6 +142,7 @@ endforeach()
 # // load test module
 foreach(test ${TEST_LIST})
     set(subdirectory test/${test})
+    set(TARGET_NAME ${test})
     if(EXISTS ${PROJECT_SOURCE_DIR}/${subdirectory}/CMakeLists.txt)
         add_subdirectory(${subdirectory})
     else()
