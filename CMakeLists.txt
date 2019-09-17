@@ -148,6 +148,8 @@ foreach(test ${TEST_LIST})
     else()
         message(AUTHOR_WARNING "No CMakeLists.txt found in ${subdirectory}")
     endif()
+    unset(subdirectory)
+    unset(TARGET_NAME)
 endforeach()
 
 # load packets
