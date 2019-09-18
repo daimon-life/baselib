@@ -94,6 +94,7 @@ set(PROJECT_OUTPUT_INCLUDE_DIR     ${PROJECT_SOURCE_DIR}/include)
 
 # include and library directory
 include_directories(${PROJECT_OUTPUT_INCLUDE_DIR})
+include_directories(${TARGET_OUTPUT_DIR}/include)
 link_directories(${CMAKE_ARCHIVE_OUTPUT_DIRECTORY})
 
 # // rpath
