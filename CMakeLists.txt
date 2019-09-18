@@ -162,8 +162,14 @@ foreach(package ${PACKAGE_LIST})
 endforeach()
 
 # install
+# install library files
 INSTALL(TARGETS ${BASE_LIST}
        RUNTIME DESTINATION bin
        LIBRARY DESTINATION lib
        ARCHIVE DESTINATION lib
 )
+# install header files
+foreach(base ${BASE_LIST})
+    INSTALL(DIRECTORY "${PROJECT_SOURCE_DIR}/include/${base}"
+    DESTINATION "include")
+endforeach()
