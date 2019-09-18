@@ -5,7 +5,7 @@ project(baselib VERSION 1.0.0.0)
 # ---> generate configure files 
 # // configure version file
 configure_file (
-  "${PROJECT_BINARY_DIR}/version.h.in"
+  "${PROJECT_SOURCE_DIR}/build/version.h.in"
   "${PROJECT_SOURCE_DIR}/include/version.h"
 )
 
