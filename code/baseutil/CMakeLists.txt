@@ -45,9 +45,12 @@ include_directories(${PROJECT_OUTPUT_INCLUDE_DIR})
 include_directories(${PROJECT_OUTPUT_INCLUDE_DIR}/${TARGET})
 
 
-# add target
-add_library(${TARGET} STATIC ${CPP_LIST} ${INC_LIST})
-
+# add target and set target properties
+add_library(${TARGET} ${CPP_LIST} ${INC_LIST})
+if (BUILD_SHARED_LIBS)
+    set_target_properties(${TARGET} PROPERTIES
+      COMPILE_DEFINITIONS "BUILD_SHARED_LIBS=1")
+endif()
 
 # disable printf printf_s etc.
 if(MSVC)
@@ -56,3 +59,14 @@ endif()
 
 # group this target to base
 SET_PROPERTY(TARGET ${TARGET} PROPERTY FOLDER "base")
+
+# install
+# install library files
+INSTALL(TARGETS ${TARGET}
+       RUNTIME DESTINATION bin
+       LIBRARY DESTINATION lib
+       ARCHIVE DESTINATION lib
+)
+# install header files
+INSTALL(DIRECTORY "${PROJECT_SOURCE_DIR}/include/${TARGET}"
+    DESTINATION "include")

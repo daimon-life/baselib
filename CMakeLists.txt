@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.3.2)
 project(baselib VERSION 1.0.0.0)
 
+# // options
+option(BUILD_SHARED_LIBS "Build shared libraries (DLL or So or Dylib)." OFF)
 
 # ---> generate configure files 
 # // configure version file
@@ -166,15 +168,3 @@ foreach(package ${PACKAGE_LIST})
     endif()
 endforeach()
 
-# install
-# install library files
-INSTALL(TARGETS ${BASE_LIST}
-       RUNTIME DESTINATION bin
-       LIBRARY DESTINATION lib
-       ARCHIVE DESTINATION lib
-)
-# install header files
-foreach(base ${BASE_LIST})
-    INSTALL(DIRECTORY "${PROJECT_SOURCE_DIR}/include/${base}"
-    DESTINATION "include")
-endforeach()
