@@ -51,7 +51,9 @@ if (BUILD_SHARED_LIBS)
     set_target_properties(${TARGET} PROPERTIES
       COMPILE_DEFINITIONS "BUILD_SHARED_LIBS=1")
 endif()
-
+set_target_properties(${TARGET} PROPERTIES
+      PUBLIC_HEADER ${INC_LIST})
+      
 # disable printf printf_s etc.
 if(MSVC)
   add_definitions(/wd4996)
@@ -66,7 +68,8 @@ INSTALL(TARGETS ${TARGET}
        RUNTIME DESTINATION bin
        LIBRARY DESTINATION lib
        ARCHIVE DESTINATION lib
+       PUBLIC_HEADER DESTINATION include
 )
 # install header files
-INSTALL(DIRECTORY "${PROJECT_SOURCE_DIR}/include/${TARGET}"
-    DESTINATION "include")
+#INSTALL(DIRECTORY "${PROJECT_SOURCE_DIR}/include/${TARGET}"
+    #DESTINATION "include")
