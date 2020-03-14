@@ -60,14 +60,13 @@ endif()
 # group this target to base
 SET_PROPERTY(TARGET ${TARGET_NAME} PROPERTY FOLDER "base")
 
-# install
+# ---> install
 # install library files
 INSTALL(TARGETS ${TARGET_NAME}
        RUNTIME DESTINATION bin
        LIBRARY DESTINATION lib
        ARCHIVE DESTINATION lib
-       PUBLIC_HEADER DESTINATION include
 )
 # install header files
-#INSTALL(DIRECTORY "${PROJECT_SOURCE_DIR}/include/${TARGET_NAME}"
-    #DESTINATION "include")
+INSTALL(DIRECTORY "${PROJECT_SOURCE_DIR}/include/${TARGET_NAME}"
+        DESTINATION "include/${PROJECT_NAME}")

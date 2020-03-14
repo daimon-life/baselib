@@ -57,4 +57,4 @@ INSTALL(TARGETS ${TARGET}
 )
 # install header files
 INSTALL(DIRECTORY "${PROJECT_SOURCE_DIR}/include/${TARGET}"
-    DESTINATION "include")
+    DESTINATION "include/${PROJECT_NAME}")
