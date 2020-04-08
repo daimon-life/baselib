@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+  
+  <Type Name="avcore::impl::RGBA32">
+    <DisplayString>{{Frame}}</DisplayString>
+    <Expand>
+      <Item Name="Frame">((avcore::impl::RGBA32*)(this))->m_oBmpDebugInfo</Item>
+    </Expand>
+  </Type>
+
+  <Type Name="avcore::impl::YV12">
+    <DisplayString>{{Frame}}</DisplayString>
+    <Expand>
+      <Item Name="Frame">((avcore::impl::YV12*)(this))->m_oYuvDebugInfo</Item>
+    </Expand>
+  </Type>
+  
+</AutoVisualizer>
