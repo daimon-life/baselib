@@ -12,6 +12,7 @@ set(INC_LIST
     DylibUtil.h
     BaseLog.h
     BaseLogSimple.h
+	BaseCallback.h
 )
 
 # source cpp files
@@ -23,6 +24,7 @@ set(CPP_LIST
     DylibUtil.cpp
     BaseLog.cpp
     BaseLogSimple.cpp
+	#BaseCallback.cpp
 )
 
 # group for this target files

@@ -9,6 +9,8 @@ set(CPP_LIST
     test_main.cpp
     test_baselog.cpp
     test_dylibutil.cpp
+	test_callback.h
+	test_callback.cpp
 )
 
 set(DEP_TARGET_LIST
