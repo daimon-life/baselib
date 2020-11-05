@@ -5,7 +5,7 @@
 #define _IBaseCallback_H_
 
 
-#include <set>
+#include <vector>
 #include <mutex>
 #include <memory>
 
@@ -48,7 +48,8 @@ private: \
     C##CallbackName##CallbackPtr& operator=(const C##CallbackName##CallbackPtr&); \
 private: \
     ParentClassName *m_pParent; \
-}m_sp##CallbackName##Callback;
+}; \
+std::shared_ptr<C##CallbackName##CallbackPtr> m_sp##CallbackName##Callback = std::make_shared<C##CallbackName##CallbackPtr>();
 #endif // BASECALLBACK_SINK
 
 
@@ -60,8 +61,8 @@ public:
     }
     CBaseCallbackMgr(const CBaseCallbackMgr& Src)
     {
-		std::lock_guard<std::mutex> lock(m_CallbackObjectSetMutex);
-        m_CallbackObjectSet = Src.m_CallbackObjectSet;
+		std::lock_guard<std::mutex> lock(m_CallbackObjectVecMutex);
+        m_CallbackObjectVec = Src.m_CallbackObjectVec;
     }
     ~CBaseCallbackMgr()
     {
@@ -69,52 +70,62 @@ public:
     }
 
 public:
-    void Add(IBaseCallback *pCallback)
+	void Add(std::shared_ptr<IBaseCallback> spCallback)
     {
-        if (pCallback)
+		if (spCallback)
         {
-			std::lock_guard<std::mutex> lock(m_CallbackObjectSetMutex);
-            m_CallbackObjectSet.insert(pCallback);
+			std::lock_guard<std::mutex> lock(m_CallbackObjectVecMutex);
+			m_CallbackObjectVec.push_back(spCallback);
         }
     }
-	void Erase(IBaseCallback *pCallback)
+	void Erase(std::shared_ptr<IBaseCallback> spCallback)
 	{
-		if (pCallback)
+		if (spCallback)
 		{
-			std::lock_guard<std::mutex> lock(m_CallbackObjectSetMutex);
-			m_CallbackObjectSet.erase(pCallback);
+			std::lock_guard<std::mutex> lock(m_CallbackObjectVecMutex);
+			std::vector<std::weak_ptr<IBaseCallback>>::iterator it;
+			for (it = m_CallbackObjectVec.begin(); it != m_CallbackObjectVec.end(); it++)
+			{
+				if (!it->expired() && it->lock() == spCallback)
+				{
+					m_CallbackObjectVec.erase(it);
+				}
+			}
 		}
 	}
     void Clear()
     {
-		std::lock_guard<std::mutex> lock(m_CallbackObjectSetMutex);
-        m_CallbackObjectSet.clear();
+		std::lock_guard<std::mutex> lock(m_CallbackObjectVecMutex);
+        m_CallbackObjectVec.clear();
     }
     bool IsActive()
     {
-		std::lock_guard<std::mutex> lock(m_CallbackObjectSetMutex);
-        bool bRet = !m_CallbackObjectSet.empty();
-        return bRet;
+		std::lock_guard<std::mutex> lock(m_CallbackObjectVecMutex);
+		return !m_CallbackObjectVec.empty();
     }
     void SafeCall_OnCallback(int nResult, const void *pData, int nDataLen, void *pExtendData)
     {
-		std::lock_guard<std::mutex> lock(m_CallbackObjectSetMutex);
-        std::set<IBaseCallback *>::iterator it;
-        for (it = m_CallbackObjectSet.begin(); it != m_CallbackObjectSet.end(); it++)
+		std::lock_guard<std::mutex> lock(m_CallbackObjectVecMutex);
+		std::vector<std::weak_ptr<IBaseCallback>>::iterator it;
+        for (it = m_CallbackObjectVec.begin(); it != m_CallbackObjectVec.end(); it++)
         {
-            (*it)->OnCallback(nResult, pData, nDataLen, pExtendData);
+			if (!it->expired())
+			{
+				std::shared_ptr<IBaseCallback> spCallback = it->lock();
+				spCallback->OnCallback(nResult, pData, nDataLen, pExtendData);
+			}
         }
     }
-    CBaseCallbackMgr& operator=(const CBaseCallbackMgr &Src)
+    CBaseCallbackMgr& operator=(const CBaseCallbackMgr& Src)
     {
-		std::lock_guard<std::mutex> lock(m_CallbackObjectSetMutex);
-        m_CallbackObjectSet = Src.m_CallbackObjectSet;
+		std::lock_guard<std::mutex> lock(m_CallbackObjectVecMutex);
+        m_CallbackObjectVec = Src.m_CallbackObjectVec;
         return *this;
     }
 
 private:
-    std::set<IBaseCallback*>   m_CallbackObjectSet;
-    std::mutex                                m_CallbackObjectSetMutex;
+    std::vector<std::weak_ptr<IBaseCallback>>   m_CallbackObjectVec;
+    std::mutex                                  m_CallbackObjectVecMutex;
 };
 
 

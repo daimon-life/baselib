@@ -36,8 +36,8 @@ public:
 	CTestCallbackNotify();
 	virtual ~CTestCallbackNotify();
 
-	void AppendNotify(IBaseCallback* pCallback);
-	void RemoveNOtify(IBaseCallback* pCallback);
+	void AppendNotify(std::shared_ptr<IBaseCallback> spCallback);
+	void RemoveNotify(std::shared_ptr<IBaseCallback> spCallback);
 
 	void Test();
 

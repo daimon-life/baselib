@@ -55,14 +55,14 @@ CTestCallbackNotify::~CTestCallbackNotify()
 
 }
 
-void CTestCallbackNotify::AppendNotify(IBaseCallback* pCallback)
+void CTestCallbackNotify::AppendNotify(std::shared_ptr<IBaseCallback> spCallback)
 {
-	m_spFuncCallbackMgr.Add(pCallback);
+	m_spFuncCallbackMgr.Add(spCallback);
 }
 
-void CTestCallbackNotify::RemoveNOtify(IBaseCallback* pCallback)
+void CTestCallbackNotify::RemoveNotify(std::shared_ptr<IBaseCallback> spCallback)
 {
-	m_spFuncCallbackMgr.Erase(pCallback);
+	m_spFuncCallbackMgr.Erase(spCallback);
 }
 
 void CTestCallbackNotify::Test()
